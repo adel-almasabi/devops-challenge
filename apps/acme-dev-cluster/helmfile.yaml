@@ -1,0 +1,22 @@
+helmDefaults:
+  kubeContext: arn:aws:eks:ap-southeast-3:111111111111:cluster/acme-dev
+  wait: true
+  timeout: 600
+
+repositories:
+  - name: kedacore
+    url: https://kedacore.github.io/charts
+
+releases:
+  - name: keda
+    namespace: keda
+    chart: kedacore/keda
+    version: 2.15.1
+    values:
+      - values/keda.yaml
+
+  - name: claims-worker
+    namespace: claims
+    chart: ../../charts/service
+    values:
+      - values/claims-worker.yaml

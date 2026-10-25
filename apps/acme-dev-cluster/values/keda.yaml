@@ -1,0 +1,9 @@
+serviceAccount:
+  operator:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::111111111111:role/keda-operator-dev
+
+podIdentity:
+  aws:
+    irsa:
+      enabled: true

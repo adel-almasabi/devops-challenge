@@ -1,0 +1,32 @@
+$ kubectl -n claims get pods
+NAME                             READY   STATUS             RESTARTS        AGE
+claims-worker-7d9f6c5b8d-ngq2c   0/1     CrashLoopBackOff   94 (1m ago)     8h27m
+claims-worker-7d9f6c5b8d-pxcvj   0/1     CrashLoopBackOff   94 (4m ago)     8h27m
+claims-worker-7d9f6c5b8d-rdkdw   0/1     CrashLoopBackOff   97 (1m ago)     8h27m
+claims-worker-7d9f6c5b8d-k22xc   0/1     CrashLoopBackOff   98 (4m ago)     8h27m
+claims-worker-7d9f6c5b8d-ckcwg   0/1     CrashLoopBackOff   78 (1m ago)     6h19m
+claims-worker-7d9f6c5b8d-xmw94   0/1     CrashLoopBackOff   71 (2m ago)     5h47m
+claims-worker-7d9f6c5b8d-pfw5d   0/1     CrashLoopBackOff   63 (4m ago)     7h23m
+claims-worker-7d9f6c5b8d-7nsxs   0/1     CrashLoopBackOff   83 (2m ago)     6h25m
+claims-worker-7d9f6c5b8d-dxmvt   0/1     CrashLoopBackOff   81 (1m ago)     7h38m
+claims-worker-7d9f6c5b8d-fvrh7   0/1     CrashLoopBackOff   81 (1m ago)     5h41m
+claims-worker-7d9f6c5b8d-4d7wx   0/1     CrashLoopBackOff   80 (4m ago)     6h54m
+claims-worker-7d9f6c5b8d-x8sd9   0/1     Error              65 (1m ago)     6h40m
+claims-worker-7d9f6c5b8d-c65m2   0/1     CrashLoopBackOff   88 (3m ago)     6h55m
+claims-worker-7d9f6c5b8d-bsphz   0/1     CrashLoopBackOff   67 (3m ago)     6h13m
+claims-worker-7d9f6c5b8d-g6kqq   0/1     CrashLoopBackOff   91 (4m ago)     5h20m
+claims-worker-7d9f6c5b8d-wlg9r   0/1     CrashLoopBackOff   77 (4m ago)     7h36m
+claims-worker-7d9f6c5b8d-kgdhg   0/1     CrashLoopBackOff   74 (4m ago)     7h24m
+claims-worker-7d9f6c5b8d-9xhlm   0/1     CrashLoopBackOff   60 (3m ago)     5h36m
+claims-worker-7d9f6c5b8d-zxng5   0/1     Error              92 (1m ago)     7h51m
+claims-worker-7d9f6c5b8d-s748w   0/1     CrashLoopBackOff   85 (1m ago)     6h35m
+claims-worker-7d9f6c5b8d-t2qcj   0/1     CrashLoopBackOff   64 (1m ago)     5h38m
+claims-worker-7d9f6c5b8d-nzcfb   0/1     CrashLoopBackOff   69 (1m ago)     7h16m
+claims-worker-7d9f6c5b8d-djzqg   0/1     CrashLoopBackOff   76 (4m ago)     6h48m
+claims-worker-7d9f6c5b8d-fftst   0/1     CrashLoopBackOff   90 (1m ago)     6h15m
+claims-worker-7d9f6c5b8d-6n6lt   0/1     CrashLoopBackOff   70 (3m ago)     7h11m
+claims-worker-7d9f6c5b8d-g5wb7   0/1     CrashLoopBackOff   93 (3m ago)     6h51m
+claims-worker-7d9f6c5b8d-vphp7   0/1     CrashLoopBackOff   74 (3m ago)     7h44m
+claims-worker-7d9f6c5b8d-2kz88   0/1     Error              72 (2m ago)     5h35m
+claims-worker-7d9f6c5b8d-jvtp6   0/1     CrashLoopBackOff   61 (3m ago)     5h27m
+claims-worker-7d9f6c5b8d-j5zps   0/1     CrashLoopBackOff   82 (1m ago)     6h15m

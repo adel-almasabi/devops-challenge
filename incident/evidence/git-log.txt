@@ -1,0 +1,49 @@
+$ git log --stat -5
+
+commit 8f3c2a1e6d9b7c4a5f0e1d2c3b4a59687f6e5d4c
+Author: Dimas Pratama <dimas@acme-insure.example>
+Date:   Tue Oct 13 17:38:52 2026 +0700
+
+    chore(claims-worker): rename service account to follow <app>-sa convention
+
+ apps/acme-prod-cluster/values/claims-worker.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 41d9e0b7a6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1
+Author: Dimas Pratama <dimas@acme-insure.example>
+Date:   Mon Oct 12 11:04:17 2026 +0700
+
+    feat(claims-worker): raise maxReplicas to 30 for month-end volume
+
+ apps/acme-prod-cluster/values/claims-worker.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 2b7e5f9c1a3d8e6b4c0f2a9d7e5b3c1a8f6d4e2b
+Author: Budi Santoso <budi@acme-insure.example>
+Date:   Wed Sep 30 16:20:41 2026 +0700
+
+    add reports uploader user for claims team
+
+ .../claims/prod/reports-uploader-user/terragrunt.hcl | 18 ++++++++++++++++++
+ modules/iam-user/main.tf                             | 24 ++++++++++++++++++++++
+ modules/iam-user/outputs.tf                          | 13 +++++++++++++
+ modules/iam-user/variables.tf                        | 15 +++++++++++++++
+ 4 files changed, 70 insertions(+)
+
+commit 7c4d1a8e3f6b9c2d5e0a7f4b1c8d3e6a9f2b5c0d
+Author: Budi Santoso <budi@acme-insure.example>
+Date:   Mon Sep 28 10:12:09 2026 +0700
+
+    wip apply workflow
+
+ .github/workflows/apply.yml | 33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
+
+commit e5a2c8f1b4d7e0a3c6f9b2d5e8a1c4f7b0d3e6a9
+Author: Budi Santoso <budi@acme-insure.example>
+Date:   Thu Sep 24 15:47:33 2026 +0700
+
+    claims worker dev: scope down iam
+
+ .../claims/dev/claims-worker-iam/terragrunt.hcl | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)

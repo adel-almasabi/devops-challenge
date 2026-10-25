@@ -1,0 +1,11 @@
+$ kubectl -n claims logs claims-worker-7d9f6c5b8d-ngq2c --previous
+
+2026-10-13T19:08:41.102Z INFO  claims-worker v1.14.2 (commit 5c1e9ab) starting
+2026-10-13T19:08:41.103Z WARN  config: OCR_TIMEOUT_MS not set, using default 30000
+2026-10-13T19:08:41.103Z WARN  config: WORKER_CONCURRENCY=4 is above recommended value 2 for BestEffort pods
+2026-10-13T19:08:41.287Z INFO  db: connected to claims-db.prod.acme.internal:5432 (pool size 8)
+2026-10-13T19:08:41.288Z INFO  sqs: polling https://sqs.ap-southeast-3.amazonaws.com/111111111111/claims-documents
+2026-10-13T19:08:41.934Z ERROR sqs: ReceiveMessage failed: WebIdentityErr: failed to retrieve credentials
+caused by: AccessDenied: Not authorized to perform sts:AssumeRoleWithWebIdentity
+	status code: 403, request id: 7f1c2e9a-4b3d-4e8f-a1c6-2d9b5e7f0a3c
+2026-10-13T19:08:41.935Z ERROR worker: fatal error in receive loop, exiting

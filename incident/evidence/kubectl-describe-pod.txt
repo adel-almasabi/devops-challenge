@@ -1,0 +1,66 @@
+$ kubectl -n claims describe pod claims-worker-7d9f6c5b8d-ngq2c
+
+Name:             claims-worker-7d9f6c5b8d-ngq2c
+Namespace:        claims
+Priority:         0
+Service Account:  claims-worker-sa
+Node:             ip-10-20-41-187.ap-southeast-3.compute.internal/10.20.41.187
+Start Time:       Tue, 13 Oct 2026 10:43:58 +0000
+Labels:           app.kubernetes.io/instance=claims-worker
+                  app.kubernetes.io/name=claims-worker
+                  pod-template-hash=7d9f6c5b8d
+Annotations:      <none>
+Status:           Running
+IP:               10.20.44.12
+Controlled By:    ReplicaSet/claims-worker-7d9f6c5b8d
+Containers:
+  claims-worker:
+    Container ID:   containerd://9e1f0c4b7a2d5e8f1a4b7c0d3e6f9a2b5c8d1e4f7a0b3c6d9e2f5a8b1c4d7e0f
+    Image:          111111111111.dkr.ecr.ap-southeast-3.amazonaws.com/claims-worker:latest
+    Image ID:       111111111111.dkr.ecr.ap-southeast-3.amazonaws.com/claims-worker@sha256:3f9a7c1e5b8d2f4a6c0e9b1d3f5a7c9e1b3d5f7a9c1e3b5d7f9a1c3e5b7d9f1a
+    Port:           <none>
+    Host Port:      <none>
+    State:          Waiting
+      Reason:       CrashLoopBackOff
+    Last State:     Terminated
+      Reason:       Error
+      Exit Code:    1
+      Started:      Tue, 13 Oct 2026 19:08:41 +0000
+      Finished:     Tue, 13 Oct 2026 19:08:42 +0000
+    Ready:          False
+    Restart Count:  94
+    Environment:
+      AWS_REGION:                   ap-southeast-3
+      QUEUE_URL:                    https://sqs.ap-southeast-3.amazonaws.com/111111111111/claims-documents
+      DATABASE_URL:                 postgres://claims:Cl41ms-Pr0d-2024!@claims-db.prod.acme.internal:5432/claims
+      WORKER_CONCURRENCY:           4
+      AWS_STS_REGIONAL_ENDPOINTS:   regional
+      AWS_DEFAULT_REGION:           ap-southeast-3
+      AWS_ROLE_ARN:                 arn:aws:iam::111111111111:role/claims-worker-prod
+      AWS_WEB_IDENTITY_TOKEN_FILE:  /var/run/secrets/eks.amazonaws.com/serviceaccount/token
+    Mounts:
+      /var/run/secrets/eks.amazonaws.com/serviceaccount from aws-iam-token (ro)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-8zq4m (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True
+  Initialized                 True
+  Ready                       False
+  ContainersReady             False
+  PodScheduled                True
+Volumes:
+  aws-iam-token:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  86400
+  kube-api-access-8zq4m:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason   Age                     From     Message
+  ----     ------   ----                    ----     -------
+  Normal   Pulled   12m (x94 over 8h)       kubelet  Container image "111111111111.dkr.ecr.ap-southeast-3.amazonaws.com/claims-worker:latest" already present on machine
+  Warning  BackOff  2m14s (x2179 over 8h)   kubelet  Back-off restarting failed container claims-worker in pod claims-worker-7d9f6c5b8d-ngq2c_claims(5d2a9c1e-7b4f-4e8a-9c3d-1f6e2b8a4c7d)

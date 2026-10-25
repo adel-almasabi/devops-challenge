@@ -1,0 +1,26 @@
+image:
+  repository: 111111111111.dkr.ecr.ap-southeast-3.amazonaws.com/claims-worker
+  tag: "1.14.0"
+
+serviceAccount:
+  name: claims-worker
+  roleArn: arn:aws:iam::111111111111:role/claims-worker-dev
+
+env:
+  AWS_REGION: ap-southeast-3
+  QUEUE_URL: https://sqs.ap-southeast-3.amazonaws.com/111111111111/claims-documents-dev
+  DATABASE_URL: postgres://claims:claims-dev@claims-db.dev.acme.internal:5432/claims
+  WORKER_CONCURRENCY: "2"
+
+resources:
+  requests:
+    cpu: 250m
+    memory: 512Mi
+  limits:
+    memory: 1Gi
+
+autoscaling:
+  enabled: true
+  minReplicas: 0
+  maxReplicas: 3
+  queueLength: 20

@@ -1,0 +1,14 @@
+autoDiscovery:
+  clusterName: acme-prod
+
+awsRegion: ap-southeast-3
+
+rbac:
+  serviceAccount:
+    name: cluster-autoscaler
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::111111111111:role/acme-prod-cluster-autoscaler
+
+extraArgs:
+  balance-similar-node-groups: true
+  skip-nodes-with-system-pods: false

@@ -1,0 +1,17 @@
+{
+  "Attributes": {
+    "QueueArn": "arn:aws:sqs:ap-southeast-3:111111111111:claims-documents",
+    "ApproximateNumberOfMessages": "48213",
+    "ApproximateNumberOfMessagesNotVisible": "0",
+    "ApproximateNumberOfMessagesDelayed": "0",
+    "CreatedTimestamp": "1709884800",
+    "LastModifiedTimestamp": "1726123456",
+    "VisibilityTimeout": "300",
+    "MaximumMessageSize": "262144",
+    "MessageRetentionPeriod": "345600",
+    "DelaySeconds": "0",
+    "ReceiveMessageWaitTimeSeconds": "20",
+    "SqsManagedSseEnabled": "true",
+    "RedrivePolicy": "{\"deadLetterTargetArn\":\"arn:aws:sqs:ap-southeast-3:111111111111:claims-documents-dlq\",\"maxReceiveCount\":5}"
+  }
+}

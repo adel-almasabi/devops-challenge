@@ -1,0 +1,10 @@
+{
+  "name": "guardduty-2slack",
+  "private": true,
+  "scripts": {
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

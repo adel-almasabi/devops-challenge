@@ -1,0 +1,32 @@
+nameOverride: ""
+
+image:
+  repository: ""
+  tag: ""
+  pullPolicy: IfNotPresent
+
+serviceAccount:
+  create: true
+  # Defaults to the release name.
+  name: ""
+  # IAM role for IRSA. Leave empty to run without AWS permissions.
+  roleArn: ""
+
+# Plain environment variables, rendered as name/value pairs.
+env: {}
+
+resources: {}
+
+# Port exposed by HTTP services. Leave empty for workers.
+port: ""
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 10
+  # KEDA aws-sqs-queue trigger: target messages per replica.
+  queueLength: 10
+  # Name of the env var holding the queue URL.
+  queueURLEnv: QUEUE_URL
+
+replicas: 1

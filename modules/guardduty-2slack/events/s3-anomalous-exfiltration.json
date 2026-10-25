@@ -1,0 +1,50 @@
+{
+  "version": "0",
+  "id": "0b7d3e9a-55c1-4f8e-a2d4-7e6f1c2b3a90",
+  "detail-type": "GuardDuty Finding",
+  "source": "aws.guardduty",
+  "account": "111111111111",
+  "time": "2026-10-09T22:40:12Z",
+  "region": "ap-southeast-3",
+  "resources": [],
+  "detail": {
+    "schemaVersion": "2.0",
+    "accountId": "111111111111",
+    "region": "ap-southeast-3",
+    "id": "9ab3c1d2e3f4a5b6c7d8e9f0a1b2c3d4",
+    "type": "Exfiltration:S3/AnomalousBehavior",
+    "severity": 8,
+    "title": "Anomalous S3 data access by IAM user claims-reports-uploader.",
+    "description": "An IAM entity invoked an S3 API in a suspicious way. GetObject was called 18,422 times on acme-claims-reports-prod from an unusual location.",
+    "resource": {
+      "resourceType": "S3Bucket",
+      "accessKeyDetails": {
+        "accessKeyId": "AKIAIOSFODNN7EXAMPLE",
+        "principalId": "AIDAEXAMPLEACME00001",
+        "userName": "claims-reports-uploader",
+        "userType": "IAMUser"
+      },
+      "s3BucketDetails": [
+        {
+          "name": "acme-claims-reports-prod",
+          "arn": "arn:aws:s3:::acme-claims-reports-prod",
+          "type": "Destination"
+        }
+      ]
+    },
+    "service": {
+      "serviceName": "guardduty",
+      "action": {
+        "actionType": "AWS_API_CALL",
+        "awsApiCallAction": {
+          "api": "GetObject",
+          "serviceName": "s3.amazonaws.com",
+          "remoteIpDetails": { "ipAddressV4": "198.51.100.77", "country": { "countryName": "Unknown" } }
+        }
+      },
+      "count": 18422
+    },
+    "createdAt": "2026-10-09T21:02:44.000Z",
+    "updatedAt": "2026-10-09T22:39:58.000Z"
+  }
+}

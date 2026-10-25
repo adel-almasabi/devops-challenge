@@ -1,0 +1,83 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  terraform-modules:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.13.2
+          terraform_wrapper: false
+
+      - name: fmt
+        run: terraform fmt -check -recursive modules
+
+      - name: init / validate / test
+        run: |
+          set -euo pipefail
+          for dir in modules/*/; do
+            echo "::group::${dir}"
+            terraform -chdir="${dir}" init -backend=false
+            terraform -chdir="${dir}" validate
+            if [ -d "${dir}tests" ]; then
+              terraform -chdir="${dir}" test
+            fi
+            echo "::endgroup::"
+          done
+
+      - name: tflint
+        uses: terraform-linters/setup-tflint@v4
+        with:
+          tflint_version: v0.55.0
+      - run: |
+          tflint --init
+          for dir in modules/*/; do
+            tflint --chdir="${dir}"
+          done
+
+      - name: checkov
+        uses: bridgecrewio/checkov-action@v12
+        with:
+          directory: modules
+          quiet: true
+          soft_fail: true
+
+  lambda:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm test
+        working-directory: modules/guardduty-2slack
+
+  helm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: azure/setup-helm@v4
+        with:
+          version: v3.16.2
+      - name: helm lint
+        run: |
+          helm lint charts/service
+          helm lint charts/service -f apps/acme-dev-cluster/values/claims-worker.yaml
+          helm lint charts/service -f apps/acme-prod-cluster/values/claims-worker.yaml
+      - name: helm template
+        run: |
+          helm template claims-worker charts/service \
+            -f apps/acme-dev-cluster/values/claims-worker.yaml > /tmp/claims-worker-dev.yaml
+          helm template claims-worker charts/service \
+            -f apps/acme-prod-cluster/values/claims-worker.yaml > /tmp/claims-worker-prod.yaml
+      - name: kubeconform
+        uses: docker://ghcr.io/yannh/kubeconform:v0.6.7
+        with:
+          args: -strict -ignore-missing-schemas /tmp/claims-worker-dev.yaml /tmp/claims-worker-prod.yaml

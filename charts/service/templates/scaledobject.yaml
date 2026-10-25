@@ -1,0 +1,20 @@
+{{- if .Values.autoscaling.enabled }}
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: {{ include "service.fullname" . }}
+  labels:
+    {{- include "service.labels" . | nindent 4 }}
+spec:
+  scaleTargetRef:
+    name: {{ include "service.fullname" . }}
+  minReplicaCount: {{ .Values.autoscaling.minReplicas }}
+  maxReplicaCount: {{ .Values.autoscaling.maxReplicas }}
+  triggers:
+    - type: aws-sqs-queue
+      metadata:
+        queueURL: {{ index .Values.env .Values.autoscaling.queueURLEnv | quote }}
+        queueLength: {{ .Values.autoscaling.queueLength | quote }}
+        awsRegion: {{ .Values.env.AWS_REGION | quote }}
+        identityOwner: operator
+{{- end }}

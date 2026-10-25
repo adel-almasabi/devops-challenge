@@ -1,0 +1,47 @@
+# Safety net: GitHub's "Contribute" button on a fork opens a PR against *this* repo.
+# Candidates must PR on their own fork. Close the wrong PRs with instructions.
+# Uses only GITHUB_TOKEN. Does not check out the PR branch.
+name: close-upstream-prs
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  close:
+    if: github.event.pull_request.head.repo.full_name != github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const body = [
+              'This pull request was opened against the **brief**, not against your fork.',
+              '',
+              'Please close this (we will close it for you) and open the PR **on your fork**:',
+              '',
+              '1. Open `https://github.com/' + context.payload.pull_request.head.repo.full_name + '`',
+              '2. **Pull requests** → **New pull request** → **compare across forks**',
+              '3. Base repository = **your** repo, base branch = `main`',
+              '4. Compare = your working branch',
+              '5. Email the recruiter your fork URL and that PR URL',
+              '',
+              'See the README: “How to start and submit”.',
+            ].join('\n')
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body,
+            })
+
+            await github.rest.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              state: 'closed',
+            })
