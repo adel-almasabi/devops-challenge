@@ -12,3 +12,4 @@ modules/guardduty-2slack/.build/
 __pycache__/
 .DS_Store
 *.zip
+rendered/
