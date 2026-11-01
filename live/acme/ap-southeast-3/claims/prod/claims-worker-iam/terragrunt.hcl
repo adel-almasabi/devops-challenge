@@ -19,6 +19,15 @@ dependency "queue" {
   config_path = "../claims-documents-queue"
 }
 
+dependency "documents_bucket" {
+  config_path = "../claims-documents-bucket"
+
+  mock_outputs = {
+    bucket_arn = "arn:aws:s3:::acme-claims-documents-prod"
+  }
+  mock_outputs_allowed_terraform_commands = ["validate", "plan"]
+}
+
 inputs = {
   name              = "claims-worker-prod"
   oidc_provider_arn = dependency.eks.outputs.oidc_provider_arn
@@ -31,6 +40,12 @@ inputs = {
       effect    = "Allow"
       actions   = ["sqs:*"]
       resources = ["*"]
+    },
+    {
+      sid       = "ReadWriteClaimDocuments"
+      effect    = "Allow"
+      actions   = ["s3:*"]
+      resources = ["${dependency.documents_bucket.outputs.bucket_arn}/*"]
     },
   ]
 }
