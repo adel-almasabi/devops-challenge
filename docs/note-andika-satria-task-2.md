@@ -1,6 +1,6 @@
 Task 2
 
-root couse
+root cause
 
 2026-10-13T19:08:41.934Z ERROR sqs: ReceiveMessage failed: WebIdentityErr: failed to retrieve credentials
 caused by: AccessDenied: Not authorized to perform sts:AssumeRoleWithWebIdentity
