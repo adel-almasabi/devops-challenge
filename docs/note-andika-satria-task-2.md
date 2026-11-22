@@ -41,8 +41,17 @@ inputs = {
   namespace         = "claims"
   service_account   = "claims-worker"
 
-alarm
+alarm (cloudwatch-describe-alarms.json)
+
       "AlarmActions": [],
-      
       "StateReason": "Threshold Crossed: 3 out of the last 3 datapoints [1621.0 (13/10/26 11:05:00), 1322.0 (13/10/26 11:00:00), 1019.0 (13/10/26 10:55:00)] were greater than the threshold (900.0) (minimum 3 datapoints for OK -> ALARM transition).",
       "StateUpdatedTimestamp": "2026-10-13T11:12:00.000Z",
+
+checking modules/sqs-queue for alarm settings:
+the module has an `alarm_actions` input (a list of ARNs), but prod does not pass any and there is no SNS topic.
+So `AlarmActions` is empty, and when the alarm fires nobody is notified.
+
+Question: when the alarm fires, to whom will the notification be sent?
+Answer: nobody. That is why we only found out from customers.
+
+setup already complete, fill email address on `alarm_email` on /live/acme/ap-southeast-3/claims/prod/claims-documents-queue

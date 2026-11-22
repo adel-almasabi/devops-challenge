@@ -112,7 +112,7 @@ I am the owner of all items. Priorities reflect that I am the only platform engi
 | # | Action | Prevents | Priority | Effort | Target |
 |---|---|---|---|---|---|
 | 1 | Restore the service account name and verify recovery (above) | Ongoing outage | P0 | 30 min | Tonight |
-| 2 | Connect the queue-age alarm to a notification topic that posts to a Slack channel, and add a "back to OK" notification | Finding out from customers | P1 | 2 h | This week |
+| 2 | **Done (minimal):** the queue-age alarm now emails an address through SNS when it fires and when it recovers (`alarm_email` in `modules/sqs-queue`). **Next:** post to a Slack channel instead of email | Finding out from customers | P1 | 2 h | Email: in this PR. Slack: this week |
 | 3 | Add alarms for crashing pods and for messages in the dead-letter queue | Silent failures | P1 | 2 h | This week |
 | 4 | Add a CI check that the service account name in the Helm values matches the IAM stack | This exact failure | P1 | 3 h | This week |
 | 5 | Make "check pod health after apply" a written step, and later automate it in CI/CD | Trusting a bad apply | P1 | 1 h | This week |
