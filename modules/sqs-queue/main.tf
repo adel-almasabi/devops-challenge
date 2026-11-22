@@ -38,8 +38,63 @@ resource "aws_cloudwatch_metric_alarm" "oldest_message_age" {
   comparison_operator = "GreaterThanThreshold"
   treat_missing_data  = "notBreaching"
 
-  alarm_actions = var.alarm_actions
-  ok_actions    = var.alarm_actions
+  alarm_actions = local.alarm_actions
+  ok_actions    = local.alarm_actions
 
   tags = var.tags
+}
+
+# Optional notification path: set alarm_email to get an email when the alarm fires and when it recovers.
+# SNS sends a confirmation mail first. Nothing is delivered until the recipient clicks the link.
+# The topic is not encrypted: CloudWatch alarms cannot publish to a topic that uses the AWS managed key,
+# and the messages only carry the alarm name and state.
+data "aws_caller_identity" "current" {
+  count = local.create_topic ? 1 : 0
+}
+
+data "aws_region" "current" {
+  count = local.create_topic ? 1 : 0
+}
+
+locals {
+  create_topic  = var.alarm_email != ""
+  alarm_actions = concat(var.alarm_actions, aws_sns_topic.alarms[*].arn)
+}
+
+resource "aws_sns_topic" "alarms" {
+  count = local.create_topic ? 1 : 0
+
+  name = "${var.name}-alarms"
+  tags = var.tags
+}
+
+resource "aws_sns_topic_policy" "alarms" {
+  count = local.create_topic ? 1 : 0
+
+  arn = aws_sns_topic.alarms[0].arn
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid       = "AllowCloudWatchAlarmsInThisAccount"
+        Effect    = "Allow"
+        Principal = { Service = "cloudwatch.amazonaws.com" }
+        Action    = "sns:Publish"
+        Resource  = aws_sns_topic.alarms[0].arn
+        Condition = {
+          StringEquals = { "aws:SourceAccount" = data.aws_caller_identity.current[0].account_id }
+          ArnLike      = { "aws:SourceArn" = "arn:aws:cloudwatch:${data.aws_region.current[0].name}:${data.aws_caller_identity.current[0].account_id}:alarm:*" }
+        }
+      },
+    ]
+  })
+}
+
+resource "aws_sns_topic_subscription" "alarm_email" {
+  count = local.create_topic ? 1 : 0
+
+  topic_arn = aws_sns_topic.alarms[0].arn
+  protocol  = "email"
+  endpoint  = var.alarm_email
 }

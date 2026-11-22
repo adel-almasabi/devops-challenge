@@ -33,6 +33,12 @@ variable "alarm_actions" {
   default     = []
 }
 
+variable "alarm_email" {
+  description = "Email address to notify when the oldest-message-age alarm fires or recovers. Leave empty for no email. The recipient must confirm the SNS subscription."
+  type        = string
+  default     = ""
+}
+
 variable "tags" {
   description = "Extra tags."
   type        = map(string)
